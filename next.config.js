@@ -1,4 +1,6 @@
 // @ts-check
+const { withContentlayer } = require("next-contentlayer");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     cleanDistDir: true,
@@ -12,6 +14,9 @@ const nextConfig = {
     poweredByHeader: false,
     productionBrowserSourceMaps: false
   };
+
+  // withContentlayer(nextConfig)
+
   
-  module.exports = nextConfig
+  module.exports = withContentlayer(nextConfig)
   

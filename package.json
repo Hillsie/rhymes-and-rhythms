@@ -11,9 +11,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "next": "canary",
     "react": "latest",
-    "react-dom": "latest",
-    "next": "canary"
+    "react-dom": "latest"
   },
   "devDependencies": {
     "@heroicons/react": "^2.0.18",
@@ -22,13 +22,20 @@
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
     "clsx": "^2.0.0",
+    "contentlayer": "^0.3.4",
     "cssnano": "^6.0.1",
+    "date-fns": "^2.30.0",
     "eslint": "^8",
     "eslint-config-next": "14.0.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "prettier-plugin-tailwindcss": "^0.5.6",
+    "next-contentlayer": "^0.3.4",
     "postcss": "^8",
     "postcss-import": "^15.1.0",
+    "prettier-plugin-tailwindcss": "^0.5.6",
+    "rehype-autolink-headings": "^7.0.0",
+    "rehype-pretty-code": "^0.10.2",
+    "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.0",
     "tailwindcss": "^3",
     "typescript": "^5.2.2"
   }
