@@ -1,3 +1,4 @@
+import { FretBoardTemp } from '@/components/fretboard/fretBoardTemp'
 import { FretBoardLayout } from '@/components/fretboard/fretboardlayout'
 
 export default function FretBoard() {
@@ -6,6 +7,7 @@ export default function FretBoard() {
             <section className="flex justify-center place-self-center">
             <FretBoardLayout />
             </section>
+            <FretBoardTemp/>
         </main>
     )
 }

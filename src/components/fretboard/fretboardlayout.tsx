@@ -1,20 +1,26 @@
 // Nut
 // Frets 22 Same as fender
 // Strings
+
+import ClassFretboard from "@/lib/classFretboard"
+
 // Width
 const GuitarString =() => <div className="h-1 w-24 bg-slate-900 self-center"/>
 
-function HeadStockNotes(){
+interface HeadStockNotesProps {
+    notes: string[];
+}
+
+function HeadStockNotes({ notes = ["y", "y", "y", "y", "y", "y"] }: HeadStockNotesProps) {
     return (
         <div className="h-64 w-7 grid grid-rows-6 justify-center place-content-center">
-            <div className="p-2">E</div>
-            <div className="p-2">B</div>
-            <div className="p-2">G</div>
-            <div className="p-2">D</div>
-            <div className="p-2">A</div>
-            <div className="p-2">E</div>
+            {notes.map((note, index) => (
+                <button key={note + index} className="p-2">
+                    {note}
+                </button>
+            ))}
         </div>
-    )
+    );
 }
 
 function Inlay(){
@@ -24,17 +30,17 @@ function Inlay(){
     )
 }
 
+interface FretNotesProps {
+    fretNotes: string[];
+}
 
-function Fret(){
+function Fret({fretNotes=["x", "x", "x", "x", "x", "x"]}: FretNotesProps){
     return (
         <div className="grid grid-col-3 justify-end place-content-center z-0 relative">
         <div className="h-64 w-20 grid grid-rows-6 row-start-1 col-start-1 col-end-1 justify-end place-content-center z-30">
-            <button className="border border-teal-600 rounded-full h-9 w-9 mr-2">F</button>
-            <button className="border border-teal-600 rounded-full h-9 w-9 mr-2">C</button>
-            <button className="border border-teal-600 rounded-full h-9 w-9 mr-2">A<span className="text-xs">β</span></button>
-            <button className="border border-teal-600 rounded-full h-9 w-9 mr-2">E<span className="text-xs">β</span></button>
-            <button className="border border-teal-600 rounded-full h-9 w-9 mr-2">B<span className="text-xs">β</span></button>
-            <button className="border border-teal-600 rounded-full h-9 w-9 mr-2">F</button>
+            {fretNotes.map((note, index) => (
+                <button key={index} className="border border-teal-600 rounded-full h-9 w-9 mr-2">{note}</button>
+            ))}
         </div>
             <div className="h-64 w-2 col-start-2 col-end-2 row-start-1 row-end-6 rounded-md bg-gradient-to-r from-gray-900 to-slate-800 shadow-sm z-10">
             </div>
@@ -52,18 +58,18 @@ function Last(){
     return (
         <div className="grid grid-col-3 justify-end place-content-center z-0">
         <div className="h-64 w-20 grid grid-rows-6 row-start-1 col-start-1 col-end-1 justify-end place-content-center z-30">
-            <div className="p-2"></div>
-            <div className="p-2"></div>
-            <div className="p-2"></div>
-            <div className="p-2"></div>
-            <div className="p-2"></div>
-            <div className="p-2"></div>
+            <div className="p-2" key="1"/>
+            <div className="p-2" key="2"/>
+            <div className="p-2" key="3"/>
+            <div className="p-2" key="4"/>
+            <div className="p-2" key="5"/>
+            <div className="p-2" key="6"/>
         </div>
             <div className="h-64 w-2 col-start-2 col-end-2 row-start-1 row-end-6">
             </div>
             <div className="h-64 col-start-1 col-end-3 row-start-1 row-end-6 grid grid-rows-6 place-content-center z-20">
             {Array.from({ length: 6 }).map((_, index) => (
-                    <GuitarString key={index} />
+                    <GuitarString key={index + 'string'} />
                 ))}
             </div>
 
@@ -81,12 +87,14 @@ function Nut(){
 }
 
 export function FretBoardLayout(){
+    const fretboard =  new ClassFretboard()
+    const notesByFret = fretboard.getAllNotesbyFret()
     return (
         <div className="flex flex-row border border-gray-900 rounded-md p-3 shadow-neutral-950 shadow-md drop-shadow-md ">
-            <HeadStockNotes />
+            <HeadStockNotes notes={notesByFret[0]}/>
             <Nut />
-            {Array.from({ length: 12 }).map((_, index) => (
-                <Fret key={index} />
+            {[...Array(11)].map((_, index) => (
+                <Fret key={notesByFret[index + 1].join()} fretNotes={notesByFret[index + 1]} />
             ))}
             <Last />
         </div>
