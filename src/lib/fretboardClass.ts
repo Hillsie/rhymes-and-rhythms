@@ -1,29 +1,32 @@
 // Fretboard Class
 
 
-class ClassFretboard {
+class FretboardClass {
+    numberOfStrings: number = 6;
+    numberOfFrets: number = 13;
     private fretboard: string[][] = [];
     private graph: Record<string, Record<string, string>> = {};
 
+
     constructor() {
         // Initialize the fretboard
-        for (let string = 0; string < 6; string++) {
+        for (let string = 0; string < this.numberOfStrings; string++) {
             this.fretboard[string] = [];
-            for (let fret = 0; fret < 12; fret++) {
+            for (let fret = 0; fret < this.numberOfFrets; fret++) {
                 this.fretboard[string][fret] = this.makeFretBoard(string, fret); // Implement this function based on your tuning
             }
         }
 
         // Initialize the graph
-        for (let string = 0; string < 6; string++) {
-            for (let fret = 0; fret < 12; fret++) {
+        for (let string = 0; string < this.numberOfStrings; string++) {
+            for (let fret = 0; fret < this.numberOfFrets; fret++) {
                 let note = this.fretboard[string][fret];
                 if (!this.graph[note]) {
                     this.graph[note] = {};
                 }
                 // Add edges to all other notes
-                for (let otherString = 0; otherString < 6; otherString++) {
-                    for (let otherFret = 0; otherFret < 12; otherFret++) {
+                for (let otherString = 0; otherString < this.numberOfStrings; otherString++) {
+                    for (let otherFret = 0; otherFret < this.numberOfFrets; otherFret++) {
                         let otherNote = this.fretboard[otherString][otherFret];
                         this.graph[note][otherNote] = this.getInterval(note, otherNote); // Implement this function based on your musical theory
                     }
@@ -51,7 +54,7 @@ class ClassFretboard {
 
     getNotesByFret(fret: number): string[] {
         const notes: string[] = [];
-        for (let string = 0; string < 6; string++) {
+        for (let string = 0; string < this.numberOfStrings; string++) {
             notes.push(this.fretboard[string][fret]);
         }
         return notes;
@@ -59,9 +62,9 @@ class ClassFretboard {
 
     getAllNotesbyFret(): string[][] {
         const notes: string[][] = [];
-        for (let fret = 0; fret < 12; fret++) {
+        for (let fret = 0; fret < this.numberOfFrets; fret++) {
             const notesAtFret: string[] = [];
-            for (let string = 0; string < 6; string++) {
+            for (let string = 0; string < this.numberOfStrings; string++) {
                 notesAtFret.push(this.fretboard[string][fret]);
             }
             notes.push(notesAtFret);
@@ -82,7 +85,7 @@ class ClassFretboard {
 
 }
 
-export default ClassFretboard;
+export default FretboardClass;
 
 /*
 musical interval between two notes. In music theory, an interval is the difference in pitch between two sounds.
