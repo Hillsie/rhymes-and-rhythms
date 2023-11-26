@@ -8,10 +8,10 @@ interface Note {
 class FretboardClass {
     numberOfStrings: number = 6;
     numberOfFrets: number = 23;
-    
-    static musicalAlphabet: {asSharps:string[],asFlats:string[]} = {
-        asSharps:['E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#'],
-        asFlats:['E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb'],
+
+    static musicalAlphabet: { asSharps: string[], asFlats: string[] } = {
+        asSharps: ['E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#'],
+        asFlats: ['E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb'],
     };
 
     private fretboard: string[][] = [];
@@ -45,7 +45,7 @@ class FretboardClass {
         }
     }
 
-    private makeFretBoard(tuning:string[], guitarString: number, fret: number): string {
+    private makeFretBoard(tuning: string[], guitarString: number, fret: number): string {
         if (tuning.length !== this.numberOfStrings) throw new Error('Invalid tunning option.Tunning for 6 strings is required.');
         // todo: Tunning validation, tunning selection
         const notes = FretboardClass.musicalAlphabet.asFlats;
@@ -57,18 +57,18 @@ class FretboardClass {
 
     private createNoteObject(note: string, otherNote: string): Note {
         const interval = this.getInterval(note, otherNote);
-        return { note, interval};
+        return { note, interval };
     }
 
     private getInterval(note1: string, note2: string): string {
-        // wip: not sure if I am going this way
+        // wip: not sure if I am going to do it this way
         const notesInOctave = FretboardClass.musicalAlphabet.asFlats;
         const distance = (notesInOctave.indexOf(note2) - notesInOctave.indexOf(note1) + 12) % 12;
-        const intervals = ['unison', 'minor 2nd', 'major 2nd', 'minor 3rd', 'major 3rd', 'perfect 4th', 'augmented 4th/diminished 5th', 'perfect 5th', 'minor 6th', 'major 6th', 'minor 7th', 'major 7th'];
+        const intervals = ['root', 'minor 2nd', 'major 2nd', 'minor 3rd', 'major 3rd', 'perfect 4th', 'augmented 4th/diminished 5th', 'perfect 5th', 'minor 6th', 'major 6th', 'minor 7th', 'major 7th'];
         return intervals[distance];
     }
 
-    
+
     getGraph(): Record<string, Record<string, Note>> {
         return this.graph;
     }
@@ -84,6 +84,41 @@ class FretboardClass {
         }
         return notes;
     }
+
+    isNoteInScale(note: string, scaleKey: string, scaleIntervalPattern: string[]): boolean {
+        const scaleNotes = this.getScaleNotes(scaleKey, scaleIntervalPattern);
+        return scaleNotes.includes(note);
+    }
+
+
+    private getScaleNotes(scaleKey: string, scaleIntervalPattern: string[]): string[] {
+        const startingNoteIndex = FretboardClass.musicalAlphabet.asFlats.indexOf(scaleKey);
+        const scaleNotes: string[] = [];
+        let currentIndex = startingNoteIndex;
+        for (const interval of scaleIntervalPattern) {
+            scaleNotes.push(FretboardClass.musicalAlphabet.asFlats[currentIndex]);
+            currentIndex = (currentIndex + this.getIntervalSteps(interval)) % FretboardClass.musicalAlphabet.asFlats.length;
+        }
+        return scaleNotes;
+    }
+
+
+
+
+    private getIntervalSteps(interval: string): number {
+        // 2 Frets = T Tone / Whole note
+        // 1 Fret = ST Semitone ' Half note
+        const intervalMap: Record<string, number> = {
+            'ST': 1,
+            'T': 2,
+        };
+        return intervalMap[interval];
+    }
+
+    getNotesInScale(scaleKey: string, scaleIntervalPattern: string[]): string[] {
+        return this.getScaleNotes(scaleKey, scaleIntervalPattern);
+    }
+
 
     getAllNotesbyFret(): string[][] {
         const notes: string[][] = [];
