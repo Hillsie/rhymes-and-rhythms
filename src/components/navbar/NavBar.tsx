@@ -20,7 +20,7 @@ export function MobileNav() {
     }
 
     return (
-        <div className="fixed bottom-14 right-24 z-50 flex h-5 w-5 flex-row rounded-full lg:hidden">
+        <div className="fixed bottom-9 opacity-60 right-24 z-50 flex h-5 w-5 flex-row rounded-full lg:hidden">
             <div className="grid-row grid grid-cols-2 grid-rows-1 gap-x-5">
                 <div
                     id="mobile_menu"
@@ -113,8 +113,8 @@ export default function NavBar() {
                     >
                         <Image
                             src={plectrum}
-                            width={50}
-                            height={50}
+                            width={30}
+                            height={30}
                             alt="Colorful plectrum"
                         />
                     </Link>

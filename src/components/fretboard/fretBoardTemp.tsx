@@ -3,7 +3,7 @@
 import React from 'react';
 import FretboardClass from '@/lib/fretboardClass';
 
-const tuning = ['E', 'A', 'D', 'G', 'B', 'E'];
+const tuning = ['E', 'B', 'G', 'D', 'A', 'E'];
 // Basic fretboard experiment with a class
 export function FretBoardTemp() {
     const fretboard =  new FretboardClass(tuning)
@@ -23,7 +23,7 @@ export function FretBoardTemp() {
             {notes.map((string, index) => (
                 <div key={index}>
                     {string.map((note, i) => (
-                        <span key={i} style={{color:fretboard.getColorOfNote(note)}}>{note} </span>
+                        <span key={i}>{note} </span>
                         // print the color of the note
                     ))}
                 </div>

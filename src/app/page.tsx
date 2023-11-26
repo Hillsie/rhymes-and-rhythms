@@ -6,8 +6,8 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
        <Image
       src={plectrum}
-      width={100}
-      height={100}
+      width={50}
+      height={50}
       alt="Colorful plectrum"
     />
     </main>
